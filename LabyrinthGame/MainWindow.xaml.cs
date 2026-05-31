@@ -38,49 +38,49 @@ namespace LabyrinthGame
             BuildGrid();
         }
         private void BuildGrid()
-    {
-        UgridMap.Children.Clear();
-
-        UgridMap.Rows = labyrinthMap.rows;
-        UgridMap.Columns = labyrinthMap.columns;
-
-        for (int x = 0; x < labyrinthMap.rows; x++)
         {
-            for (int y = 0; y < labyrinthMap.columns; y++)
+            UgridMap.Children.Clear();
+
+            UgridMap.Rows = labyrinthMap.rows;
+            UgridMap.Columns = labyrinthMap.columns;
+
+            for (int x = 0; x < labyrinthMap.rows; x++)
             {
-                var tile = labyrinthMap.Tiles[x, y];
-
-                var img = new Image
+                for (int y = 0; y < labyrinthMap.columns; y++)
                 {
-                    Source = new BitmapImage(labyrinthMap.TileImages[tile.type]),
-                    Stretch = Stretch.Fill
-                };
+                    var tile = labyrinthMap.Tiles[x, y];
 
-                RenderOptions.SetBitmapScalingMode(img, BitmapScalingMode.NearestNeighbor);
+                    var img = new Image
+                    {
+                        Source = new BitmapImage(labyrinthMap.TileImages[tile.type]),
+                        Stretch = Stretch.Fill
+                    };
 
-                var border = new Border
-                {
-                    BorderThickness = new Thickness(0.5),
-                    BorderBrush = Brushes.White,
-                    Child = img,
-                    Tag = tile
-                };
+                    RenderOptions.SetBitmapScalingMode(img, BitmapScalingMode.NearestNeighbor);
 
-                border.MouseEnter += (s, e) =>
-                {
-                    hoveredTile = (Tile)((Border)s).Tag;
-                };
+                    var border = new Border
+                    {
+                        BorderThickness = new Thickness(0.5),
+                        BorderBrush = Brushes.White,
+                        Child = img,
+                        Tag = tile
+                    };
 
-                border.MouseLeave += (s, e) =>
-                {
-                    if (hoveredTile == (Tile)((Border)s).Tag)
-                        hoveredTile = null;
-                };
+                    border.MouseEnter += (s, e) =>
+                    {
+                        hoveredTile = (Tile)((Border)s).Tag;
+                    };
 
-                UgridMap.Children.Add(border);
+                    border.MouseLeave += (s, e) =>
+                    {
+                        if (hoveredTile == (Tile)((Border)s).Tag)
+                            hoveredTile = null;
+                    };
+
+                    UgridMap.Children.Add(border);
+                }
             }
         }
-    }
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
             if (hoveredTile == null)
@@ -156,7 +156,14 @@ namespace LabyrinthGame
         {
             sliRows.IsEnabled = !sliRows.IsEnabled;
             sliColumns.IsEnabled = !sliColumns.IsEnabled;
-            btnLock.Content = sliColumns.IsEnabled ? "Lock" : "Unlock";
+            if (btnLanguageToggle.Content.ToString() == "Nyelv")
+            {
+                btnLock.Content = sliColumns.IsEnabled ? "meret zarolas" : "meret feloldas";
+            }
+            else
+            {
+                btnLock.Content = sliColumns.IsEnabled ? "Lock" : "Unlock";
+            }
         }
 
         private void btnExport_Click(object sender, RoutedEventArgs e)
@@ -214,6 +221,30 @@ namespace LabyrinthGame
             }
 
             BuildGrid();
+        }
+
+        private void btlLanguage_Click(object sender, RoutedEventArgs e)
+        {
+            if (btnLanguageToggle.Content.ToString() == "Language")
+            {
+                btnLanguageToggle.Content = "Nyelv";
+                lblRows.Content = "Sorok";
+                lblCols.Content = "Oszlopok";
+                btnLock.Content = sliColumns.IsEnabled ? "meret zarolas" : "meret Feloldas";
+                btnExport.Content = "letoltes";
+                btnImport.Content = "betoltes";
+                lblName.Content = "labirintus neve";
+            }
+            else
+            {
+                btnLanguageToggle.Content = "Language";
+                lblRows.Content = "Rows";
+                lblCols.Content = "Columns";
+                btnLock.Content = sliColumns.IsEnabled ? "Lock" : "Unlock";
+                btnExport.Content = "Export";
+                btnImport.Content = "Import";
+                lblName.Content = "Labyrinth Name";
+            }
         }
     }
 }

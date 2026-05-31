@@ -16,12 +16,12 @@
         <Border Grid.Column="0" Grid.Row="0" Margin="5" Background="yellow">
             <StackPanel>
                 <StackPanel Orientation="Vertical">
-                    <Label Content="Labirintus neve:" FontSize="14" Margin="5"/>
+                    <Label x:Name="lblName" Content="Labirintus neve:" FontSize="14" Margin="5"/>
                     <TextBox x:Name="txtLbName"  Margin="5"/>
                 </StackPanel>
                 <StackPanel Orientation="vertical">
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="Sorok szama" VerticalAlignment="Center" FontSize="10" Margin="5" />
+                        <Label x:Name="lblRows" Content="Sorok szama" VerticalAlignment="Center" FontSize="10" Margin="5" />
                         <TextBlock  x:Name="txtRows" VerticalAlignment="Center" Margin="5" FontSize="10" Text="{Binding ElementName=sliRows, Path=Value}"/>
                     </StackPanel>
                     <Slider x:Name="sliRows" 
@@ -34,7 +34,7 @@
                             Margin="5" 
                             ValueChanged="sliChanged"/>
                     <StackPanel Orientation="Horizontal" >
-                        <Label Content="Oszlopok szama" VerticalAlignment="Center" FontSize="10" Margin="5" />
+                        <Label x:Name="lblCols" Content="Oszlopok szama" VerticalAlignment="Center" FontSize="10" Margin="5" />
                         <TextBlock x:Name="txtColumns" VerticalAlignment="Center" Margin="5" FontSize="10" Text="{Binding ElementName=sliColumns, Path=Value}"/>
                     </StackPanel>
                     <Slider x:Name="sliColumns" 
@@ -48,7 +48,7 @@
                             ValueChanged="sliChanged"/>
                 </StackPanel>
                 <Button Content="Meret zarolas" x:Name="btnLock" Margin="5" Click="LockButton_Click"/>
-                <Button Content="Nyelv" x:Name="btnLanguageToggle" Margin="5"/>
+                <Button Content="Nyelv" x:Name="btnLanguageToggle" Margin="5" Click="btlLanguage_Click"/>
                 <Button Content="Betoltes" x:Name="btnImport" Margin="5" Click="btnImport_Click"/>
                 <Button Content="Letoltes" x:Name="btnExport" Margin="5" Click="btnExport_Click"/>
             </StackPanel>
