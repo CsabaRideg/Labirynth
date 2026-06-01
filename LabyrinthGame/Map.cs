@@ -18,7 +18,6 @@ namespace LabyrinthGame
         private List<Tile> rooms;
         private List<Uri> Images { get; }
         public Dictionary<string, Uri> TileImages { get; }
-
         public Map(int rows, int columns, int map_height)
         {
             this.rows = rows;
@@ -203,5 +202,4 @@ namespace LabyrinthGame
             return true;
         }
     }
-
 }
