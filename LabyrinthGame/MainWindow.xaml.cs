@@ -168,6 +168,8 @@ namespace LabyrinthGame
 
         private void btnExport_Click(object sender, RoutedEventArgs e)
         {
+            if (!labyrinthMap.IsValidMap()) return;
+
             var dialog = new SaveFileDialog
             {
                 Filter = "Text file (*.txt)|*.txt",
@@ -183,7 +185,7 @@ namespace LabyrinthGame
             {
                 for (int y = 0; y < labyrinthMap.Tiles.GetLength(1); y++)
                 {
-                    sb.Append(Map.GetCharFromType(labyrinthMap.Tiles[x, y].type));
+                    sb.Append(Tile.GetCharFromType(labyrinthMap.Tiles[x, y].type));
                 }
 
                 sb.AppendLine();
@@ -216,7 +218,7 @@ namespace LabyrinthGame
                 for (int col = 0; col < columns; col++)
                 {
                     labyrinthMap.Tiles[row, col] = new Tile(row, col);
-                    labyrinthMap.Tiles[row, col].type = Map.GetTypeFromChar(lines[row][col]);
+                    labyrinthMap.Tiles[row, col].type = Tile.GetTypeFromChar(lines[row][col]);
                 }
             }
 

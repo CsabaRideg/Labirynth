@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace LabyrinthGame
 {
@@ -67,7 +68,6 @@ namespace LabyrinthGame
             TileImages["0L"]    = new Uri(Path.Combine(imageFolder, "15.png"), UriKind.Absolute);
 
         }
-
         public void SizeChanged(int new_rows, int new_columns)
         {
             Tile[,] newTiles = new Tile[new_rows, new_columns];
@@ -89,46 +89,54 @@ namespace LabyrinthGame
             rows = new_rows;
             columns = new_columns;
         }
-        public static char GetCharFromType(string type)
+        private bool HaveEntrance()
         {
-            return type switch
+            List<Tile> entrances = Tiles.Cast<Tile>()
+                                    .Where(tile => tile.isEntrance(rows - 1, columns - 1))
+                                    .ToList();
+
+            if (entrances.Count > 0)
             {
-                "0" => '.',
-                "0LR"=> '═',
-                "0BT"=> '║',
-                "0BLRT" => '╬',
-                "0RT" => '╚',
-                "0BR" => '╔',
-                "0BL" =>'╗',
-                "0LT"=>'╝',
-                "0LRT"=>'╩',
-                "0BRT"=>'╠',
-                "0BLR" =>'╦',
-                "0BLT"=> '╣',
-                "0T" => '█',
-                "0R" => '█',
-                "0B" => '█',
-                "0L" => '█'
-            };
+                MessageBox.Show(string.Join(", ", entrances.Select(tile => tile.row + ":" + tile.column)));
+                return true;
+            }
+            return false; 
         }
-        public static string GetTypeFromChar(char c)
+        private bool HaveRoom()
         {
-            return c switch
+            List<Tile> rooms = Tiles.Cast<Tile>()
+                                    .Where(tile => tile.isRoom())
+                                    .ToList();
+            
+            if (rooms.Count > 0)
             {
-                '.' => "0",
-                '═' => "0LR",
-                '║' => "0BT",
-                '╬' => "0BLRT",
-                '╚' => "0RT",
-                '╔' => "0BR",
-                '╗' => "0BL",
-                '╝' => "0LT",
-                '╩' => "0LRT",
-                '╠' => "0BRT",
-                '╦' => "0BLR",
-                '╣' => "0BLT",
-                '█' => "0T"
-            };
+                MessageBox.Show(string.Join(", ", rooms.Select(tile => tile.row + ":" + tile.column)));
+                return true;
+            }
+            return false;
+        }
+        private bool HaveValidRoute()
+        {
+            return false;
+        }
+        public bool IsValidMap()
+        {
+            if (!HaveEntrance())
+            {
+                MessageBox.Show("The labyrinth must have at least one entrance, which is not a room.");
+                return false;
+            }
+            if (!HaveRoom())
+            {
+                MessageBox.Show("The labyrinth must have at least one room.");
+                return false;
+            }
+            if (!HaveValidRoute())
+            {
+                MessageBox.Show("The labyrinth must have a route from the entrance to the room.");
+                return false;
+            }
+                return true;
         }
     }
 
