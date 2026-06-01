@@ -165,7 +165,6 @@ namespace LabyrinthGame
                 btnLock.Content = sliColumns.IsEnabled ? "Lock" : "Unlock";
             }
         }
-
         private void btnExport_Click(object sender, RoutedEventArgs e)
         {
             if(txtLbName.Text == "")
@@ -198,7 +197,6 @@ namespace LabyrinthGame
 
             File.WriteAllText(dialog.FileName, sb.ToString(), Encoding.UTF8);
         }
-
         private void btnImport_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog
@@ -229,7 +227,6 @@ namespace LabyrinthGame
 
             BuildGrid();
         }
-
         private void btlLanguage_Click(object sender, RoutedEventArgs e)
         {
             if (btnLanguageToggle.Content.ToString() == "Language")
@@ -253,6 +250,5 @@ namespace LabyrinthGame
                 lblName.Content = "Labyrinth Name";
             }
         }
-
     }
 }

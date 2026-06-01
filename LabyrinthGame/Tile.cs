@@ -57,7 +57,7 @@ namespace LabyrinthGame
                 '╠' => "0BRT",
                 '╦' => "0BLR",
                 '╣' => "0BLT",
-                '█' => "0T"
+                '█' => "ABLRT"
             };
         }
         public bool isEntrance(int lastrow, int lastcolumn)
@@ -85,7 +85,7 @@ namespace LabyrinthGame
         }
         public bool isRoom()
         {
-            return type == "0T" || type == "0R" || type == "0B" || type == "0L";
+            return type == "0T" || type == "0R" || type == "0B" || type == "0L" || type == "ABLRT";
         }
         public bool CanMoveTo(char direction, Tile[,] tiles)
         {

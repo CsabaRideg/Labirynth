@@ -68,6 +68,7 @@ namespace LabyrinthGame
             TileImages["0R"] = new Uri(Path.Combine(imageFolder, "13.png"), UriKind.Absolute);
             TileImages["0B"] = new Uri(Path.Combine(imageFolder, "14.png"), UriKind.Absolute);
             TileImages["0L"] = new Uri(Path.Combine(imageFolder, "15.png"), UriKind.Absolute);
+            TileImages["ABLRT"] = new Uri(Path.Combine(imageFolder, "16.png"), UriKind.Absolute);
 
         }
         public void SizeChanged(int new_rows, int new_columns)
