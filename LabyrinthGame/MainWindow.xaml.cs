@@ -168,6 +168,11 @@ namespace LabyrinthGame
 
         private void btnExport_Click(object sender, RoutedEventArgs e)
         {
+            if(txtLbName.Text == "")
+            {
+                MessageBox.Show("Please enter a name for the labyrinth before exporting.");
+                return;
+            }
             if (!labyrinthMap.IsValidMap()) return;
 
             var dialog = new SaveFileDialog
@@ -248,5 +253,6 @@ namespace LabyrinthGame
                 lblName.Content = "Labyrinth Name";
             }
         }
+
     }
 }

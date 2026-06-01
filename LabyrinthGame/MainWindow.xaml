@@ -17,7 +17,7 @@
             <StackPanel>
                 <StackPanel Orientation="Vertical">
                     <Label x:Name="lblName" Content="Labirintus neve:" FontSize="14" Margin="5"/>
-                    <TextBox x:Name="txtLbName"  Margin="5"/>
+                    <TextBox x:Name="txtLbName"  Margin="5" />
                 </StackPanel>
                 <StackPanel Orientation="vertical">
                     <StackPanel Orientation="Horizontal">
