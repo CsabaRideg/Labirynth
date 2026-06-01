@@ -52,22 +52,22 @@ namespace LabyrinthGame
 
             TileImages = new Dictionary<string, Uri>();
 
-            TileImages["0"]     = new Uri(Path.Combine(imageFolder, "0.png"),  UriKind.Absolute);
-            TileImages["0LR"]   = new Uri(Path.Combine(imageFolder, "1.png"),  UriKind.Absolute);
-            TileImages["0BT"]   = new Uri(Path.Combine(imageFolder, "2.png"),  UriKind.Absolute);
-            TileImages["0BLRT"] = new Uri(Path.Combine(imageFolder, "3.png"),  UriKind.Absolute);
-            TileImages["0RT"]   = new Uri(Path.Combine(imageFolder, "4.png"),  UriKind.Absolute);
-            TileImages["0BR"]   = new Uri(Path.Combine(imageFolder, "5.png"),  UriKind.Absolute);
-            TileImages["0BL"]   = new Uri(Path.Combine(imageFolder, "6.png"),  UriKind.Absolute);
-            TileImages["0LT"]   = new Uri(Path.Combine(imageFolder, "7.png"),  UriKind.Absolute);
-            TileImages["0LRT"]  = new Uri(Path.Combine(imageFolder, "8.png"),  UriKind.Absolute);
-            TileImages["0BRT"]  = new Uri(Path.Combine(imageFolder, "9.png"),  UriKind.Absolute);
-            TileImages["0BLR"]  = new Uri(Path.Combine(imageFolder, "10.png"), UriKind.Absolute);
-            TileImages["0BLT"]  = new Uri(Path.Combine(imageFolder, "11.png"), UriKind.Absolute);
-            TileImages["0T"]    = new Uri(Path.Combine(imageFolder, "12.png"), UriKind.Absolute);
-            TileImages["0R"]    = new Uri(Path.Combine(imageFolder, "13.png"), UriKind.Absolute);
-            TileImages["0B"]    = new Uri(Path.Combine(imageFolder, "14.png"), UriKind.Absolute);
-            TileImages["0L"]    = new Uri(Path.Combine(imageFolder, "15.png"), UriKind.Absolute);
+            TileImages["0"] = new Uri(Path.Combine(imageFolder, "0.png"), UriKind.Absolute);
+            TileImages["0LR"] = new Uri(Path.Combine(imageFolder, "1.png"), UriKind.Absolute);
+            TileImages["0BT"] = new Uri(Path.Combine(imageFolder, "2.png"), UriKind.Absolute);
+            TileImages["0BLRT"] = new Uri(Path.Combine(imageFolder, "3.png"), UriKind.Absolute);
+            TileImages["0RT"] = new Uri(Path.Combine(imageFolder, "4.png"), UriKind.Absolute);
+            TileImages["0BR"] = new Uri(Path.Combine(imageFolder, "5.png"), UriKind.Absolute);
+            TileImages["0BL"] = new Uri(Path.Combine(imageFolder, "6.png"), UriKind.Absolute);
+            TileImages["0LT"] = new Uri(Path.Combine(imageFolder, "7.png"), UriKind.Absolute);
+            TileImages["0LRT"] = new Uri(Path.Combine(imageFolder, "8.png"), UriKind.Absolute);
+            TileImages["0BRT"] = new Uri(Path.Combine(imageFolder, "9.png"), UriKind.Absolute);
+            TileImages["0BLR"] = new Uri(Path.Combine(imageFolder, "10.png"), UriKind.Absolute);
+            TileImages["0BLT"] = new Uri(Path.Combine(imageFolder, "11.png"), UriKind.Absolute);
+            TileImages["0T"] = new Uri(Path.Combine(imageFolder, "12.png"), UriKind.Absolute);
+            TileImages["0R"] = new Uri(Path.Combine(imageFolder, "13.png"), UriKind.Absolute);
+            TileImages["0B"] = new Uri(Path.Combine(imageFolder, "14.png"), UriKind.Absolute);
+            TileImages["0L"] = new Uri(Path.Combine(imageFolder, "15.png"), UriKind.Absolute);
 
         }
         public void SizeChanged(int new_rows, int new_columns)
@@ -91,60 +91,57 @@ namespace LabyrinthGame
             rows = new_rows;
             columns = new_columns;
         }
-        private bool RouteFinder(Tile entrance, Tile room) 
+        private bool IsRouteValid(Tile entrance, Tile room)
         {
-            List<KeyValuePair<Tile, string>> Intersections = new List<KeyValuePair<Tile, string>>();
-            List<Tile> visited = new List<Tile>();
+            List<KeyValuePair<Tile, string>> Intersections = new();
+            HashSet<Tile> visited = new();
 
             Intersections.Add(new KeyValuePair<Tile, string>(entrance, entrance.type));
 
-            
-
-            while (Intersections.Count() > 0)
+            while (Intersections.Count > 0)
             {
-                if (Intersections.Last().Key.CanMoveTo(Intersections.Last().Value[1], Tiles))
+                int index = Intersections.Count - 1;
+
+                Tile currentTile = Intersections[index].Key;
+                string directions = Intersections[index].Value;
+
+                visited.Add(currentTile);
+                if (directions.Length <= 1)
                 {
-                    Tile lastTile = Intersections.Last().Key;
-                    string Unvisited_Directions = Intersections.Last().Value;
-
-                    Tile next = lastTile.TileToDirection(Unvisited_Directions[1], Tiles);
-                    if (visited.Contains(next))
-                    {
-                        Unvisited_Directions = Unvisited_Directions.Remove(1, 1);
-                        continue;
-                    }
-                        
-                    if (next == room) return true;
-
-
-                    Unvisited_Directions = Unvisited_Directions.Remove(1, 1);
-
-                    Intersections[Intersections.Count-1] = new KeyValuePair<Tile, string>(lastTile, Unvisited_Directions);
-
-                    if (Unvisited_Directions == "0")
-                    {
-                        visited.Add(lastTile);
-                        Intersections.Remove(Intersections.Last());
-                    }
-
-                    Intersections.Add(new KeyValuePair<Tile, string>(next, next.type));
+                    visited.Add(currentTile);
+                    Intersections.RemoveAt(index);
+                    continue;
                 }
-                else
+
+                char direction = directions[1];
+                string remaining = directions.Remove(1, 1);
+
+                Intersections[index] =
+                    new KeyValuePair<Tile, string>(currentTile, remaining);
+
+                if (!currentTile.CanMoveTo(direction, Tiles))
+                    continue;
+
+                Tile next = currentTile.TileToDirection(direction, Tiles);
+
+                char oppositeDirection = direction switch
                 {
-                    if (Intersections.Last().Value == "0")
-                    {
-                        visited.Add(Intersections.Last().Key);
-                        Intersections.Remove(Intersections.Last());
-                    }
-                    else
-                    {
-                        string Unvisited_Directions = Intersections.Last().Value.Remove(1, 1);
-                        Intersections[Intersections.Count - 1] = new KeyValuePair<Tile, string>(Intersections.Last().Key, Unvisited_Directions);
-                    }                    
-                }
+                    'T' => 'B',
+                    'R' => 'L',
+                    'B' => 'T',
+                    'L' => 'R',
+                    _ => throw new InvalidOperationException()
+                };
+                
+                if (next == room)
+                    return true;
+                string directionsNext = next.type.Remove(next.type.IndexOf(oppositeDirection),1);
+
+                if (!visited.Contains(next))
+                    Intersections.Add(new KeyValuePair<Tile, string>(next, directionsNext));
             }
-            return false;                                                                                                       //If we have explored all intersections and not reached the room, return false
 
+            return false;
         }
         private bool HaveEntrance()
         {
@@ -154,20 +151,18 @@ namespace LabyrinthGame
 
             if (entrances.Count > 0)
             {
-                MessageBox.Show(string.Join(", ", entrances.Select(tile => tile.row + ":" + tile.column)));
                 return true;
             }
-            return false; 
+            return false;
         }
         private bool HaveRoom()
         {
             rooms = Tiles.Cast<Tile>()
                                     .Where(tile => tile.isRoom())
                                     .ToList();
-            
+
             if (rooms.Count > 0)
             {
-                MessageBox.Show(string.Join(", ", rooms.Select(tile => tile.row + ":" + tile.column)));
                 return true;
             }
             return false;
@@ -178,14 +173,14 @@ namespace LabyrinthGame
             {
                 foreach (Tile room in rooms)
                 {
-                    if (!RouteFinder( entrance, room))
+                    if (!IsRouteValid(entrance, room))
                     {
                         return false;
                     }
                 }
             }
 
-            return false;
+            return true;
         }
         public bool IsValidMap()
         {
@@ -204,7 +199,7 @@ namespace LabyrinthGame
                 MessageBox.Show("The labyrinth must have a route from all entrances to all rooms.");
                 return false;
             }
-                return true;
+            return true;
         }
     }
 

@@ -44,11 +44,11 @@ namespace LabyrinthGame
             UgridMap.Rows = labyrinthMap.rows;
             UgridMap.Columns = labyrinthMap.columns;
 
-            for (int x = 0; x < labyrinthMap.rows; x++)
+            for (int row = 0; row < labyrinthMap.rows; row++)
             {
-                for (int y = 0; y < labyrinthMap.columns; y++)
+                for (int column = 0; column < labyrinthMap.columns; column++)
                 {
-                    var tile = labyrinthMap.Tiles[x, y];
+                    var tile = labyrinthMap.Tiles[row, column];
 
                     var img = new Image
                     {
@@ -181,11 +181,11 @@ namespace LabyrinthGame
 
             var sb = new StringBuilder();
 
-            for (int x = 0; x < labyrinthMap.Tiles.GetLength(0); x++)
+            for (int row = 0; row < labyrinthMap.Tiles.GetLength(0); row++)
             {
-                for (int y = 0; y < labyrinthMap.Tiles.GetLength(1); y++)
+                for (int column = 0; column < labyrinthMap.Tiles.GetLength(1); column++)
                 {
-                    sb.Append(Tile.GetCharFromType(labyrinthMap.Tiles[x, y].type));
+                    sb.Append(Tile.GetCharFromType(labyrinthMap.Tiles[row, column].type));
                 }
 
                 sb.AppendLine();

@@ -64,22 +64,22 @@ namespace LabyrinthGame
         {
             bool isBorder =
                     row == 0 || column == 0 ||
-                    row == lastcolumn ||
-                    column == lastrow;
+                    row == lastrow ||
+                    column == lastcolumn;
 
-            if (!isBorder || type == "0" || isRoom()) return false;                                     //Empty or not border or room
+            if (!isBorder || type == "0" || isRoom()) return false;                             //Empty or not border or room
 
             return ((column, row, type) switch
             {                                                                
-                (0, 0, "0LT") => false,                                                                 //TopLeft
-                (0, var row, "0BL") when row == lastrow => false,                                       //BottomLeft
-                (var col, 0, "0RT") when col == lastcolumn => false,                                    //TopRight
-                (var col, var row, "0BR") when row == lastrow && col == lastcolumn => false,            //BottomRight
+                (0, 0, "0LT") => false,                                                         //TopLeft
+                (0, var row, "0BL") when row == lastrow => false,                               //BottomLefts
+                (var col, 0, "0RT") when col == lastcolumn => false,                            //TopRight
+                (var col, var row, "0BR") when row == lastrow && col == lastcolumn => false,    //BottomRight
 
-                (0, _, var type) when type.Contains("L") => true,                                       //Left
-                (var col,_, var type) when type.Contains("R") && col == lastcolumn => true,             //Right
-                (_, 0, var type) when type.Contains("T") => true,                                       //Top
-                (_, var row, var type) when type.Contains("B") && row == lastrow => true,               //Bottom
+                (0, _, var type) when type.Contains("L") => true,                               //Left
+                (var col,_, var type) when type.Contains("R") && col == lastcolumn => true,     //Right
+                (_, 0, var type) when type.Contains("T") => true,                               //Top
+                (_, var row, var type) when type.Contains("B") && row == lastrow => true,       //Bottom
                 _ => false
             });
         }
@@ -87,14 +87,52 @@ namespace LabyrinthGame
         {
             return type == "0T" || type == "0R" || type == "0B" || type == "0L";
         }
-        public bool CanMoveTo(char Direction, Tile[,] Tiles) 
+        public bool CanMoveTo(char direction, Tile[,] tiles)
         {
 
-            return false;
+            int maxRows = tiles.GetLength(0);
+            int maxColumns = tiles.GetLength(1);
+
+            switch (direction)
+            {
+                case 'L':
+                    if (column == 0)
+                        return false;
+
+                    return tiles[row, column - 1].type.Contains('R');
+
+                case 'R':
+                    if (column == maxColumns - 1)
+                        return false;
+
+                    return tiles[row, column + 1].type.Contains('L');
+
+                case 'T':
+                    if (row == 0)
+                        return false;
+
+                    return tiles[row - 1, column].type.Contains('B');
+
+                case 'B':
+                    if (row == maxRows - 1)
+                        return false;
+
+                    return tiles[row + 1, column].type.Contains('T');
+
+                default:
+                    return false;
+            }
         }
-        public Tile TileToDirection(char Direction, Tile[,] Tiles)
+        public Tile TileToDirection(char direction, Tile[,] tiles)
         {
-            return null;
+                return direction switch
+            {
+                'L' => tiles[row, column - 1],
+                'R' => tiles[row, column + 1],
+                'T' => tiles[row - 1, column],
+                'B' => tiles[row + 1, column],
+                _ => throw new ArgumentException("Invalid direction")
+            };
         }
     }
 }
