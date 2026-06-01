@@ -14,6 +14,8 @@ namespace LabyrinthGame
         public int columns;
         public int map_height;
         public Tile[,] Tiles;
+        private List<Tile> entrances;
+        private List<Tile> rooms;
         private List<Uri> Images { get; }
         public Dictionary<string, Uri> TileImages { get; }
 
@@ -89,9 +91,64 @@ namespace LabyrinthGame
             rows = new_rows;
             columns = new_columns;
         }
+        private bool RouteFinder(Tile entrance, Tile room) 
+        {
+            List<KeyValuePair<Tile, string>> Intersections = new List<KeyValuePair<Tile, string>>();
+            List<Tile> visited = new List<Tile>();
+
+            Intersections.Add(new KeyValuePair<Tile, string>(entrance, entrance.type));
+
+            
+
+            while (Intersections.Count() > 0)
+            {
+                if (Intersections.Last().Key.CanMoveTo(Intersections.Last().Value[1], Tiles))
+                {
+                    Tile lastTile = Intersections.Last().Key;
+                    string Unvisited_Directions = Intersections.Last().Value;
+
+                    Tile next = lastTile.TileToDirection(Unvisited_Directions[1], Tiles);
+                    if (visited.Contains(next))
+                    {
+                        Unvisited_Directions = Unvisited_Directions.Remove(1, 1);
+                        continue;
+                    }
+                        
+                    if (next == room) return true;
+
+
+                    Unvisited_Directions = Unvisited_Directions.Remove(1, 1);
+
+                    Intersections[Intersections.Count-1] = new KeyValuePair<Tile, string>(lastTile, Unvisited_Directions);
+
+                    if (Unvisited_Directions == "0")
+                    {
+                        visited.Add(lastTile);
+                        Intersections.Remove(Intersections.Last());
+                    }
+
+                    Intersections.Add(new KeyValuePair<Tile, string>(next, next.type));
+                }
+                else
+                {
+                    if (Intersections.Last().Value == "0")
+                    {
+                        visited.Add(Intersections.Last().Key);
+                        Intersections.Remove(Intersections.Last());
+                    }
+                    else
+                    {
+                        string Unvisited_Directions = Intersections.Last().Value.Remove(1, 1);
+                        Intersections[Intersections.Count - 1] = new KeyValuePair<Tile, string>(Intersections.Last().Key, Unvisited_Directions);
+                    }                    
+                }
+            }
+            return false;                                                                                                       //If we have explored all intersections and not reached the room, return false
+
+        }
         private bool HaveEntrance()
         {
-            List<Tile> entrances = Tiles.Cast<Tile>()
+            entrances = Tiles.Cast<Tile>()
                                     .Where(tile => tile.isEntrance(rows - 1, columns - 1))
                                     .ToList();
 
@@ -104,7 +161,7 @@ namespace LabyrinthGame
         }
         private bool HaveRoom()
         {
-            List<Tile> rooms = Tiles.Cast<Tile>()
+            rooms = Tiles.Cast<Tile>()
                                     .Where(tile => tile.isRoom())
                                     .ToList();
             
@@ -115,8 +172,19 @@ namespace LabyrinthGame
             }
             return false;
         }
-        private bool HaveValidRoute()
+        private bool AllRouteValid()
         {
+            foreach (Tile entrance in entrances)
+            {
+                foreach (Tile room in rooms)
+                {
+                    if (!RouteFinder( entrance, room))
+                    {
+                        return false;
+                    }
+                }
+            }
+
             return false;
         }
         public bool IsValidMap()
@@ -131,9 +199,9 @@ namespace LabyrinthGame
                 MessageBox.Show("The labyrinth must have at least one room.");
                 return false;
             }
-            if (!HaveValidRoute())
+            if (!AllRouteValid())
             {
-                MessageBox.Show("The labyrinth must have a route from the entrance to the room.");
+                MessageBox.Show("The labyrinth must have a route from all entrances to all rooms.");
                 return false;
             }
                 return true;

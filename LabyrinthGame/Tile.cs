@@ -87,5 +87,14 @@ namespace LabyrinthGame
         {
             return type == "0T" || type == "0R" || type == "0B" || type == "0L";
         }
+        public bool CanMoveTo(char Direction, Tile[,] Tiles) 
+        {
+
+            return false;
+        }
+        public Tile TileToDirection(char Direction, Tile[,] Tiles)
+        {
+            return null;
+        }
     }
 }
