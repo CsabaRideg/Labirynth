@@ -14,10 +14,10 @@ namespace LabyrinthGame
         public int row;
         public int column;
 
-        public Tile( int x, int y)
+        public Tile( int row, int column)
         {
-            this.row = x;
-            this.column = y;
+            this.row = row;
+            this.column = column;
         }
         public static char GetCharFromType(string type)
         {
@@ -38,7 +38,8 @@ namespace LabyrinthGame
                 "0T" => '█',
                 "0R" => '█',
                 "0B" => '█',
-                "0L" => '█'
+                "0L" => '█',
+                "ABLRT" => '█'
             };
         }
         public static string GetTypeFromChar(char c)
@@ -57,7 +58,8 @@ namespace LabyrinthGame
                 '╠' => "0BRT",
                 '╦' => "0BLR",
                 '╣' => "0BLT",
-                '█' => "ABLRT"
+                '█' => "ABLRT",
+                _ => throw new NotImplementedException()
             };
         }
         public bool isEntrance(int lastrow, int lastcolumn)

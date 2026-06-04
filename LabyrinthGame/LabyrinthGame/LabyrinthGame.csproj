@@ -10,9 +10,13 @@
 
   <ItemGroup>
     <Compile Remove="Images\**" />
+    <Compile Remove="kepek\**" />
     <EmbeddedResource Remove="Images\**" />
+    <EmbeddedResource Remove="kepek\**" />
     <None Remove="Images\**" />
+    <None Remove="kepek\**" />
     <Page Remove="Images\**" />
+    <Page Remove="kepek\**" />
   </ItemGroup>
 
 </Project>
