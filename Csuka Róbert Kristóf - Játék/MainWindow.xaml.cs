@@ -360,11 +360,11 @@ namespace Labirynth
                     {
                         Text = pillPalya[j][i].ToString(),
                         FontFamily = new FontFamily("Consolas"),
-                        FontSize = Math.Min(kockaHosszusag, kockaMagassag) * 3,
+                        FontSize = Math.Min(kockaHosszusag, kockaMagassag) * 6,
                         TextAlignment = TextAlignment.Center,
                         VerticalAlignment = VerticalAlignment.Center,
                         HorizontalAlignment = HorizontalAlignment.Center
-
+                       
                     };
 
                     if (pillPalya[j][i] == '.')
@@ -392,8 +392,78 @@ namespace Labirynth
 
                 }
             }
+        }
+
+        private void Palya_Rajzolasa()
+        {
+            cnvPalya.Children.Clear();
+
+            if (latogatottTermek.Count >= termekSzama && termekSzama > 0 || terembeVolt == true)
+            {
+                txtMission.Text = T("MissionFindExit");
+                terembeVolt = true;
+            }
+            else if (termekSzama > 0)
+            {
+                txtMission.Text = string.Format(T("MissionFindRooms"), latogatottTermek.Count, termekSzama);
+            }
+            else
+            {
+                txtMission.Text = T("MissionExitOnly");
+            }
+
+            int oszlopokSzama = pillPalya[0].Length;
+            int sorokSzama = pillPalya.Length;
+            int kockaHosszusag = (int)(cnvPalya.ActualWidth / oszlopokSzama);
+            int kockaMagassag = (int)(cnvPalya.ActualHeight / sorokSzama);
 
 
+            for (global::System.Int32 j = 0; j < sorokSzama; j++)
+            {
+                for (global::System.Int32 i = 0; i < pillPalya[j].Length; i++)
+                {
+
+                    Border cella = new Border
+                    {
+                        Width = kockaHosszusag,
+                        Height = kockaMagassag,
+                        BorderBrush = Brushes.Transparent
+                    };
+
+                    TextBlock tb = new TextBlock
+                    {
+                        Text = pillPalya[j][i].ToString(),
+                        FontFamily = new FontFamily("Consolas"),
+                        FontSize = Math.Min(kockaHosszusag, kockaMagassag) * 6,
+                        TextAlignment = TextAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        HorizontalAlignment = HorizontalAlignment.Center
+
+                    };
+
+                    if (pillPalya[j][i] == '.')
+                    {
+                        tb.Text = "";
+                    }
+
+                    if (j == jatekosPosY && i == jatekosPosX)
+                    {
+
+                        cella.Background = Brushes.Green;
+                    }
+
+
+
+                    cella.Child = tb;
+
+                    Canvas.SetLeft(cella, i * kockaHosszusag);
+                    Canvas.SetTop(cella, j * kockaMagassag);
+
+                    cnvPalya.Children.Add(cella);
+                }
+            }
+
+            Lehetosegek_Frissitese();
         }
 
         private bool NyitFel(char c)
@@ -571,77 +641,7 @@ namespace Labirynth
             }
         }
 
-        private void Palya_Rajzolasa()
-        {
-            cnvPalya.Children.Clear();
 
-            if (latogatottTermek.Count >= termekSzama && termekSzama > 0 || terembeVolt == true)
-            {
-                txtMission.Text = T("MissionFindExit");
-                terembeVolt = true;
-            }
-            else if (termekSzama > 0)
-            {
-                txtMission.Text = string.Format(T("MissionFindRooms"), latogatottTermek.Count, termekSzama);
-            }
-            else
-            {
-                txtMission.Text = T("MissionExitOnly");
-            }
-
-            int oszlopokSzama = pillPalya[0].Length;
-            int sorokSzama = pillPalya.Length;
-            int kockaHosszusag = (int)(cnvPalya.ActualWidth / oszlopokSzama);
-            int kockaMagassag = (int)(cnvPalya.ActualHeight / sorokSzama);
-
-
-            for (global::System.Int32 j = 0; j < sorokSzama; j++)
-            {
-                for (global::System.Int32 i = 0; i < pillPalya[j].Length; i++)
-                {
-
-                    Border cella = new Border
-                    {
-                        Width = kockaHosszusag,
-                        Height = kockaMagassag,
-                        BorderBrush = Brushes.Transparent
-                    };
-
-                    TextBlock tb = new TextBlock
-                    {
-                        Text = pillPalya[j][i].ToString(),
-                        FontFamily = new FontFamily("Consolas"),
-                        FontSize = Math.Min(kockaHosszusag, kockaMagassag) * 3,
-                        TextAlignment = TextAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Center,
-                        HorizontalAlignment = HorizontalAlignment.Center
-
-                    };
-
-                    if (pillPalya[j][i] == '.')
-                    {
-                        tb.Text = "";
-                    }
-
-                    if (j == jatekosPosY && i == jatekosPosX)
-                    {
-
-                        cella.Background = Brushes.Green;
-                    }
-
-
-
-                    cella.Child = tb;
-
-                    Canvas.SetLeft(cella, i * kockaHosszusag);
-                    Canvas.SetTop(cella, j * kockaMagassag);
-
-                    cnvPalya.Children.Add(cella);
-                }
-            }
-
-            Lehetosegek_Frissitese();
-        }
 
 
         private void Ido_Countdown()
