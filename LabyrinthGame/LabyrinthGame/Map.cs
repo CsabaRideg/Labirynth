@@ -71,17 +71,17 @@ namespace LabyrinthGame
         public void SizeChanged(int new_rows, int new_columns)
         {
             Tile[,] newTiles = new Tile[new_rows, new_columns];
-            for (int i = 0; i < new_rows; i++)
+            for (int row = 0; row < new_rows; row++)
             {
-                for (int j = 0; j < new_columns; j++)
+                for (int column = 0; column < new_columns; column++)
                 {
-                    if (i < rows && j < columns)
+                    if (row < rows && column < columns)
                     {
-                        newTiles[i, j] = Tiles[i, j];
+                        newTiles[row, column] = Tiles[row, column];
                     }
                     else
                     {
-                        newTiles[i, j] = new Tile(i, j);
+                        newTiles[row, column] = new Tile(row, column);
                     }
                 }
             }
