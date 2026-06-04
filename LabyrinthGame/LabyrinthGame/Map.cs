@@ -41,7 +41,7 @@ namespace LabyrinthGame
             Images = Directory.Exists(imageFolder)
                 ? Directory.GetFiles(imageFolder)
                     .Where(f =>
-                        f.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
+                        f.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
                     .Select(f => new Uri(f, UriKind.Absolute))
                     .ToList()
                 : new List<Uri>();
