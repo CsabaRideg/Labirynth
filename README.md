@@ -166,123 +166,117 @@ So stands this little work: part puzzle, part performance, part contest 'twixt t
 
 
 
------ Magyarul:
+## ----- Magyarul:
 
-Labirynth
-**Látjátok feleim szemtevrel, mik vogymuk:
-isa, ez világnak játéka vala,
-melyet C# és WPF keze szerze.**
+# Labirynth
 
-Prológus
-Látjátok, miként ez kis mű, Labirynth neveztetik,
-labirintusnak játéka, melyben az ember fia
-járandó sok ösvényen, fordulón, rejtekhelyen,
-s keresse az kijáratot, mielőtt az idő elenyésszék.
+> *Látjátok feleim szemetekkel, mik vagyunk:*  
+> *útvesztőben járók, idő által kergetettek.*
 
-Ez játék íratott C# nyelven és WPF-vel,
-s a pálya egyszerű szövegállományból olvastatik,
-hogy ki-ki maga formálhassa az útvesztőt, miként akarja.
-Az ember belép, bolyong, termeket jár be,
-s csak az után menekedhetik, ha minden kötelességét teljesíté.
+E kis mű egy **C# és WPF** alapokon épített labirintusjáték, melyben a játékos folyosók, sarkok, kereszteződések és termek között bolyong, mígnem minden kötelező helyet bejár, s végül megtalálja a kijáratot.
 
-Az játékról
-A Labirynth egy asztali labirintusjáték,
-melyben a játékos box-drawing jelekből rajzolt pályán jár.
-Keresnie kell minden termet, jelölve █ jellel,
-s azután az kijárathoz kell jutnia, ha szabadságot kíván.
+***
 
-Az idő azonban szigorú úr:
-harminc másodperc adatott neki,
-s ha az idő elfogy, a játék véget ér.
+## Az játékról
 
-Fő jeles tulajdonságok
-🗺️ Térkép betöltése szövegből — a pálya .txt állományból olvastatik.
+A **Labirynth** egy asztali játék, mely szöveges térképekből építi fel a labirintust. A játékos a pályán `W`, `A`, `S`, `D` billentyűkkel mozog, termeket keres fel, s az idő szorításában próbálja elhagyni az útvesztőt.
 
-🧍 Játékos mozgatása — W, A, S, D billentyűkkel.
+A pálya egyszerű `.txt` állományból töltődik be, ezért könnyen szerkeszthető, bővíthető és új pályákkal gazdagítható.
 
-🏠 Termek bejárása — minden █ jellel jelölt terem meglátogatandó.
+***
 
-🚪 Kijárat logika — csak akkor nyílik meg az út, ha minden terem bejártatik.
+## Fő tulajdonságok
 
-💾 Mentés és visszatöltés — a játék állása elmenthető és ismét visszahozható.
+- 🗺️ **Pályabetöltés szöveges fájlból**
+- 🧍 **Mozgás billentyűzettel** (`W`, `A`, `S`, `D`)
+- 🏠 **Termek látogatása** (`█` jelekkel jelölve)
+- 🚪 **Kijárat csak a feladat teljesítése után**
+- 💾 **Állás mentése és visszatöltése**
+- ⏱️ **Visszaszámláló időzítő**
+- ⏸️ **Játék megállítása**
+- 🌍 **Többnyelvű felület `lang.json` segítségével**
+- 📐 **Ablakmérethez igazodó pályamegjelenítés**
 
-⏱️ Visszaszámlálás — az idő fogy, mint az ember élete.
+***
 
-⏸️ Megállítás — a játék rövid időre megállítható.
+## Miképpen játszandó
 
-🌍 Többnyelvűség — a feliratok lang.json állományból töltetnek.
+| Billentyű | Jelentés |
+|-----------|----------|
+| `W` | Mozgás felfelé |
+| `A` | Mozgás balra |
+| `S` | Mozgás lefelé |
+| `D` | Mozgás jobbra |
 
-📐 Reszponzív pályanézet — az ablak méretéhez a pálya igazodik.
+### A cél
 
-Miképpen játszandó
-Billentyű	Művelet
-W	Fölfelé mész
-A	Balra mégy
-S	Lefelé mégy
-D	Jobbra mégy
-Az ember dolga
-Nyomjad az „Pálya betöltése” gombot.
+1. Kattints a **Pálya betöltése** gombra.
+2. Tölts be egy megfelelő `.txt` pályát.
+3. Járd be a labirintust.
+4. Látogasd meg az összes termet.
+5. Ezután keresd meg a kijáratot, és hagyd el a pályát.
 
-Járjad az útvesztőt a W A S D billentyűkkel.
+### Az időről
 
-Látogasd meg minden termet, mely █ jellel vagyon jelölve.
+Minden játék meghatározott időkerettel indul. Ha az idő lejár, a futás véget ér, s a pálya elveszik, hacsak korábban el nem mentetett.
 
-Ha minden terem megvolt, keresd meg az kijáratot.
+***
 
-Ha kijutsz, győzedelmet nyersz.
+## Mentés és visszatöltés
 
-Az időről
-Harminc másodperc adatott minden játékhoz.
-Ha ez idő elmúlik, a játék elenyészik,
-és a pálya újra kezdődik, ha nem vala elmentve az állás.
+A játék állása menthető, hogy a játékos később onnan folytathassa útját, ahol előzőleg megállt.
 
-Mentés és visszatöltés
-Az állás elmenthető, hogy a játékos ne veszítse el munkáját.
+A mentett állomány tartalmazza:
 
-Az elmentett állomány tartalmazza:
+- a pálya jelenlegi állapotát,
+- a játékos helyét (`P`),
+- a már bejárt termeket (`R{sor}:{oszlop}`),
+- a hátralévő időt (`T{másodperc}`).
 
-a pálya jelen formáját,
+### Példa mentési sorokra
 
-a játékos helyét, P jellel,
+```txt
+P╬
+R3:4
+T18
+```
 
-a látogatott termeket, R{sor}:{oszlop} formában,
+***
 
-a hátralevő időt, T{másodperc} alakban.
+## A pálya jelei
 
-Mentéshez: kattints az „Állás mentése” gombra.
-Visszatöltéshez: kattints a „Pálya betöltése” gombra, s válaszd a mentett állományt.
+A pálya UTF-8 kódolású szövegfájlban tárolódik. Az alábbi jelek használhatók:
 
-Az pálya jeleiről
-A pálya UTF-8 szövegállományban íratik,
-s minden jel külön rendeltetésű.
+| Jel | Jelentés |
+|-----|----------|
+| `╬` | Kereszteződés |
+| `═` | Vízszintes folyosó |
+| `║` | Függőleges folyosó |
+| `╦` `╩` `╣` `╠` | Elágazások |
+| `╗` `╝` `╚` `╔` | Sarkok |
+| `█` | Terem |
+| `.` | Üres hely |
+| `P` | Játékos helye mentett állásban |
 
-Jel	Jelentés
-╬	Keresztút, minden irány nyitva
-═	Vízszintes folyosó
-║	Függőleges folyosó
-╦ ╩ ╣ ╠	Elágazások
-╗ ╝ ╚ ╔	Sarkok
-█	Terem, melyet meg kell látogatni
-.	Üres hely, semmi
-P	Játékos jelölése mentett állásban
-Példa pálya
-text
-.║═══╗.
+### Példa pálya
+
+```txt
+.╔═══╗.
 .║...║.
 .╠═╦═╣.
 .║.█.║.
 .╚═╩═╝.
-Példa mentés
-text
-P╬
-R3:4
-T18
-Nyelv és beszéd
-Minden felirat lang.json állományból olvastatik,
-hogy a játék több nyelven szólhasson az emberhez.
-Ha új nyelvet kívánsz adni, a JSON állományba új nyelvi ág teendő.
+```
 
-json
+***
+
+## Nyelvek és `lang.json`
+
+A kezelőfelület feliratai a `lang.json` fájlból töltődnek be, így a játék több nyelven is használható.
+
+### Példa
+
+```json
 {
   "hu": {
     "Title": "Labirintus",
@@ -293,18 +287,30 @@ json
     "LoadMap": "Load Map"
   }
 }
-Technikai dolgok
-Tulajdonság	Érték
-Nyelv	C#
-Keretrendszer	.NET / WPF
-Felület	XAML, Canvas, Viewbox
-Térkép	UTF-8 szövegállomány
-Lokalizáció	lang.json
-Mozgás	Billentyűzet, KeyDown
-Időzítő	DispatcherTimer
-Mentés	Szöveges állomány P, R, T sorokkal
-Fájlok rendje
-text
+```
+
+Új nyelv hozzáadásához elegendő egy új nyelvi blokkot felvenni a JSON állományba.
+
+***
+
+## Technikai adatok
+
+| Tulajdonság | Érték |
+|-------------|-------|
+| Nyelv | C# |
+| Keretrendszer | .NET / WPF |
+| Felület | XAML |
+| Pályaformátum | UTF-8 `.txt` |
+| Lokalizáció | `lang.json` |
+| Mozgás | `KeyDown` esemény |
+| Időzítő | `DispatcherTimer` |
+| Mentési formátum | `P`, `R`, `T` sorok |
+
+***
+
+## Projektstruktúra
+
+```txt
 Labirynth/
 ├── Labirynth.sln
 ├── Labirynth/
@@ -314,29 +320,34 @@ Labirynth/
 │   └── maps/
 │       ├── map1.txt
 │       └── map2.txt
-Hogyan indítandó
-Másold le a repositoryt.
+```
 
-Nyisd meg a megoldást Visual Studio-ban.
+***
 
-Fordítsd és indítsd el a programot.
+## Indítás
 
-Tölts be egy pályát.
+1. Klónozd a repót.
+2. Nyisd meg Visual Studio-ban.
+3. Fordítsd le és indítsd el.
+4. Tölts be egy pályát.
+5. Játssz.
 
-Járjad, míg győzelemre nem jutsz.
+```bash
+git clone https://github.com/felhasznalonev/labirynth.git
+```
 
-Szükséges dolgok
-Windows operációs rendszer
+***
 
-Visual Studio 2022 vagy újabb
+## Követelmények
 
-.NET 6.0 vagy újabb
+- Windows
+- Visual Studio 2022 vagy újabb
+- .NET 6.0 vagy újabb
 
-Befejezés
-Íme vala ez a kis mű,
-mely játék és próbatétel egyszerre,
-s melyben az ember az idővel viaskodik,
-az útvesztőben pedig önmagával találkozik.
+***
 
-**Látjátok feleim, mik vogymuk:
-kicsiny játék, de nagy próba.**
+## Zárszó
+
+> *Kicsiny játék ez, de nem kicsiny próbája az embernek.*  
+> *Mert ki jól jár a labirintusban, az kijáratot lel;*  
+> *ki pedig késik, azt elnyeli az idő.*
