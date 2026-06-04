@@ -42,8 +42,6 @@ namespace LabyrinthGame
                 ? Directory.GetFiles(imageFolder)
                     .Where(f =>
                         f.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
-                        f.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
-                        f.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase))
                     .Select(f => new Uri(f, UriKind.Absolute))
                     .ToList()
                 : new List<Uri>();
