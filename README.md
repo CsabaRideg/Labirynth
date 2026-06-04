@@ -1,93 +1,85 @@
-# 🏰 Labirintus — A WPF Labyrinth Game
+# 🏰 Labirynth
 
-> *"What a piece of work is a man! How noble in reason, how infinite in faculty!"*
-> — and yet, he still gets lost in a maze.
+> *A maze of ink and iron, time and trial;*  
+> *A little kingdom wrought in C#'s own fire.*
 
-***
+## Prologue
 
-## 📜 Foreword
+Attend, fair wanderer, and incline thine eye unto this curious work, this **Labirynth**, a game devised in **C# and WPF**, wherein a lone soul ventures through passages dark and chambers secret, seeking not merely movement, but meaning; not merely escape, but triumph.
 
-Hark, brave soul, and lend thine eyes to this humble README, for within these walls of code doth lie a game most wondrous — a **labyrinth**, wrought in the fires of C# and WPF, where the player must navigate winding corridors, discover hidden chambers, and seek the blessed exit before the sands of time run dry.
+Here are corridors drawn in stern black sigils, rooms marked as solemn stations of duty, and a clock most merciless that counts thy boldness by the second. Thus is the player summoned: to enter, to endure, to discover every hall required, and at the last to depart the maze in honor.
 
-***
+## Of the Game Itself
 
-## 🎮 What Is This Game?
+**Labirynth** is a desktop labyrinth game built with **C# and WPF (.NET)**, wherein the player traverses a maze fashioned from box-drawing characters, visits each required room, and claims the exit ere time itself doth fail.
 
-**Labirintus** is a desktop labyrinth game built with **C# and WPF (.NET)**. The player navigates through a maze constructed of box-drawing characters, visits all required rooms, and then escapes through the exit — all before the countdown timer reaches zero.
+The map is loaded from plain text, and so the maze may be reshaped at will by the author's hand. What is written may be played; what is played may be saved; what is saved may rise again upon another day.
 
-The maze is loaded from a plain text file, making it fully customizable. Save your progress mid-game, return another day, and continue thy quest.
+## Noble Features
 
-***
+- 🗺️ **Map loading from text files** — The maze is read from `.txt` files composed of special labyrinth symbols.
+- 🧍 **Player movement** — The wanderer moves with `W`, `A`, `S`, and `D`.
+- 🏠 **Room visitation system** — Chambers marked with `█` must all be visited before escape is permitted.
+- 🚪 **Exit logic** — The edge of the map becomes thy salvation only when thy duties within are complete.
+- 💾 **Save and load** — Position, visited rooms, and remaining time may all be preserved and restored.
+- ⏱️ **Countdown timer** — A fixed span of seconds governs each attempt.
+- ⏸️ **Pause button** — Time may briefly stay its hand.
+- 🌍 **Multi-language support** — User interface texts are governed through `lang.json`.
+- 📐 **Responsive maze display** — The playfield adapts with the window and redraws to fit its allotted space.
 
-## ✨ Features
+## How One Plays
 
-- 🗺️ **Text-based map loading** — Mazes are defined in `.txt` files using special box-drawing characters
-- 🧍 **Player movement** — Navigate with `W`, `A`, `S`, `D` keys
-- 🏠 **Room discovery** — Visit all marked rooms (`█`) before you may escape
-- 🚪 **Dynamic exit detection** — The exit is only available once all rooms have been visited
-- 💾 **Save & Load** — Save your current position, visited rooms, and remaining time; load it back at any moment
-- ⏱️ **Countdown timer** — 30 seconds of glory; run out and the labyrinth claims thee
-- ⏸️ **Pause functionality** — Stop time itself (briefly) with the pause button
-- 🌍 **Multi-language support** — Switch between languages via a JSON language file (`lang.json`)
-- 📐 **Responsive canvas** — The maze scales with the window size using WPF Viewbox
-
-***
-
-## 🕹️ How to Play
-
-| Key | Action |
+| Key | Office |
 |-----|--------|
-| `W` | Move Up |
-| `A` | Move Left |
-| `S` | Move Down |
-| `D` | Move Right |
+| `W` | Move upward |
+| `A` | Move leftward |
+| `S` | Move downward |
+| `D` | Move rightward |
 
-### The Goal
+### The Player's Charge
 
-1. Load a map using the **"Pálya betöltése"** button
-2. Navigate the labyrinth using the `W A S D` keys
-3. Visit **all rooms** marked with `█` on the map
-4. Once all rooms are visited, find the **exit** (any open edge of the map)
-5. Confirm your escape — and glory shall be thine
+1. Press **"Pálya betöltése"** to summon a map.
+2. Traverse the labyrinth with the `W A S D` keys.
+3. Seek out every room denoted by `█`.
+4. Fulfil thy chamber-duty entire.
+5. Find the exit upon the boundary and depart in victory.
 
-### The Timer
+### Of Time, That Cruel Steward
 
-Thou hast **30 seconds** per game. Should the clock expire before thy escape, the labyrinth swallows thee whole. Save thy progress if thou must depart.
+A countdown shadows every run. Should the allotted time expire ere thy task be finished, the maze is lost, the board is cleared, and thy venture ends in sorrow. Yet by saving thy state, thou mayst defy forgetfulness and return again.
 
-***
+## Of Saving and Returning
 
-## 💾 Save & Load
+The game allows the present state to be written to file, that progress not perish.
 
-The game supports mid-game saving. The saved file contains:
+A saved file contains:
 
-- The current map state
-- The player's position (marked with `P`)
-- All visited rooms (marked with `R{row}:{col}` lines)
-- Remaining time (marked with `T{seconds}`)
+- The present form of the map
+- The player's current position, marked with `P`
+- The rooms already visited, written as `R{row}:{col}`
+- The time remaining, written as `T{seconds}`
 
-To save: click **"Állás mentése"**
-To load: click **"Pálya betöltése"** and select a previously saved file
+To save thy progress: click **"Állás mentése"**  
+To restore it: click **"Pálya betöltése"** and choose the saved file.
 
-***
+## Of Maps and Their Characters
 
-## 🗺️ Map Format
-
-Maps are plain `.txt` files encoded in **UTF-8**. The following characters are used:
+Maps are stored as **UTF-8 plain text files**, and each symbol bears a precise office in the kingdom of the maze.
 
 | Character | Meaning |
 |-----------|---------|
-| `╬` | Crossroads (all 4 directions) |
+| `╬` | Crossroads; all directions open |
 | `═` | Horizontal corridor |
 | `║` | Vertical corridor |
 | `╦` `╩` `╣` `╠` | T-junctions |
 | `╗` `╝` `╚` `╔` | Corners |
-| `█` | Room (must be visited) |
-| `.` | Empty space (wall/void) |
-| `P` | Player starting position (followed by the original character) |
+| `█` | Room that must be visited |
+| `.` | Empty space or void |
+| `P` | Player marker in a saved file, followed by the original underlying tile |
 
 ### Example Map
 
-```
+```txt
 .╔═══╗.
 .║...║.
 .╠═╦═╣.
@@ -95,103 +87,256 @@ Maps are plain `.txt` files encoded in **UTF-8**. The following characters are u
 .╚═╩═╝.
 ```
 
-### Save File Extra Lines
+### Example Save Data
 
+```txt
+P╬
+R3:4
+T18
 ```
-P╬          ← Player is at a crossroads position
-R3:4        ← Visited room at row 3, column 4
-T18         ← 18 seconds remaining
-```
 
-***
+## Of Tongues and Translation
 
-## 🌍 Language Support
-
-The game reads all UI text from `lang.json`. To add a new language, simply add a new entry to the JSON file:
+All visible text within the game is drawn from `lang.json`, that the interface may speak in more than one language. To add another tongue, place a new language block within the JSON file.
 
 ```json
 {
   "hu": {
     "Title": "Labirintus",
-    "LoadMap": "Pálya betöltése",
-    ...
+    "LoadMap": "Pálya betöltése"
   },
   "en": {
     "Title": "Labyrinth",
-    "LoadMap": "Load Map",
-    ...
+    "LoadMap": "Load Map"
   }
 }
 ```
 
-Switch languages in the application using the language selector dropdown.
+The player may then change the language through the selector within the program.
 
-***
-
-## 🛠️ Technical Details
+## Mechanicks and Materials
 
 | Property | Value |
 |----------|-------|
 | Language | C# |
-| Framework | .NET (WPF) |
-| UI | XAML + Canvas + Viewbox |
-| Map Format | UTF-8 plain text |
-| Config | `lang.json` |
-| Movement | Keyboard (`KeyDown` event) |
+| Framework | .NET / WPF |
+| Interface | XAML, Canvas, and layout-based drawing |
+| Map source | UTF-8 text files |
+| Localization | `lang.json` |
+| Movement input | Keyboard via `KeyDown` |
 | Timer | `DispatcherTimer` |
+| Save format | Text-based state lines with `P`, `R`, and `T` markers |
 
-***
+## The Ordering of Files
 
-## 📁 Project Structure
-
-```
+```txt
 Labirynth/
 ├── Labirynth.sln
 ├── Labirynth/
-│   ├── MainWindow.xaml         ← UI layout
-│   ├── MainWindow.xaml.cs      ← Game logic
-│   ├── lang.json               ← Language strings
+│   ├── MainWindow.xaml
+│   ├── MainWindow.xaml.cs
+│   ├── lang.json
 │   └── maps/
-│       ├── map1.txt            ← Example maps
+│       ├── map1.txt
 │       └── map2.txt
 ```
 
-***
-
-## 🚀 Getting Started
+## To Set It Running
 
 1. **Clone the repository**
    ```bash
    git clone https://github.com/felhasznalonev/labirynth.git
    ```
+2. **Open the solution** in Visual Studio.
+3. **Build and run** the project.
+4. **Load a map** with the proper button.
+5. **Enter the maze** and prove thy worth.
 
-2. **Open in Visual Studio**
-   Open `Labirynth.sln`
+## Requirements
 
-3. **Build & Run**
-   Press `F5` or click **Start**
+- Windows operating system
+- Visual Studio 2022 or later
+- .NET 6.0 or later
 
-4. **Load a map**
-   Click **"Pálya betöltése"** and select a `.txt` map file
+## Epilogue
 
-5. **Play!**
+So stands this little work: part puzzle, part performance, part contest 'twixt the player and the clock. If fortune smiles and reason holds, the rooms shall all be known, the passage rightly read, and the exit taken as a king takes back his crown.
 
-***
+> *Exit, pursued by a timer.*
 
-## ⚙️ Requirements
 
-- Visual Studio 2022 (or later)
-- .NET 6.0 or higher
-- Windows OS (WPF is Windows-only)
 
-***
+----- Magyarul:
 
-## 📜 License
+Labirynth
+**Látjátok feleim szemtevrel, mik vogymuk:
+isa, ez világnak játéka vala,
+melyet C# és WPF keze szerze.**
 
-*"All the world's a stage"* — and this code is freely given to it.
-This project is open source. Do with it as thou wilt, but credit where credit is due.
+Prológus
+Látjátok, miként ez kis mű, Labirynth neveztetik,
+labirintusnak játéka, melyben az ember fia
+járandó sok ösvényen, fordulón, rejtekhelyen,
+s keresse az kijáratot, mielőtt az idő elenyésszék.
 
-***
+Ez játék íratott C# nyelven és WPF-vel,
+s a pálya egyszerű szövegállományból olvastatik,
+hogy ki-ki maga formálhassa az útvesztőt, miként akarja.
+Az ember belép, bolyong, termeket jár be,
+s csak az után menekedhetik, ha minden kötelességét teljesíté.
 
-> *"Though she be but little, she is fierce."*
-> — So too is this labyrinth. Good luck.
+Az játékról
+A Labirynth egy asztali labirintusjáték,
+melyben a játékos box-drawing jelekből rajzolt pályán jár.
+Keresnie kell minden termet, jelölve █ jellel,
+s azután az kijárathoz kell jutnia, ha szabadságot kíván.
+
+Az idő azonban szigorú úr:
+harminc másodperc adatott neki,
+s ha az idő elfogy, a játék véget ér.
+
+Fő jeles tulajdonságok
+🗺️ Térkép betöltése szövegből — a pálya .txt állományból olvastatik.
+
+🧍 Játékos mozgatása — W, A, S, D billentyűkkel.
+
+🏠 Termek bejárása — minden █ jellel jelölt terem meglátogatandó.
+
+🚪 Kijárat logika — csak akkor nyílik meg az út, ha minden terem bejártatik.
+
+💾 Mentés és visszatöltés — a játék állása elmenthető és ismét visszahozható.
+
+⏱️ Visszaszámlálás — az idő fogy, mint az ember élete.
+
+⏸️ Megállítás — a játék rövid időre megállítható.
+
+🌍 Többnyelvűség — a feliratok lang.json állományból töltetnek.
+
+📐 Reszponzív pályanézet — az ablak méretéhez a pálya igazodik.
+
+Miképpen játszandó
+Billentyű	Művelet
+W	Fölfelé mész
+A	Balra mégy
+S	Lefelé mégy
+D	Jobbra mégy
+Az ember dolga
+Nyomjad az „Pálya betöltése” gombot.
+
+Járjad az útvesztőt a W A S D billentyűkkel.
+
+Látogasd meg minden termet, mely █ jellel vagyon jelölve.
+
+Ha minden terem megvolt, keresd meg az kijáratot.
+
+Ha kijutsz, győzedelmet nyersz.
+
+Az időről
+Harminc másodperc adatott minden játékhoz.
+Ha ez idő elmúlik, a játék elenyészik,
+és a pálya újra kezdődik, ha nem vala elmentve az állás.
+
+Mentés és visszatöltés
+Az állás elmenthető, hogy a játékos ne veszítse el munkáját.
+
+Az elmentett állomány tartalmazza:
+
+a pálya jelen formáját,
+
+a játékos helyét, P jellel,
+
+a látogatott termeket, R{sor}:{oszlop} formában,
+
+a hátralevő időt, T{másodperc} alakban.
+
+Mentéshez: kattints az „Állás mentése” gombra.
+Visszatöltéshez: kattints a „Pálya betöltése” gombra, s válaszd a mentett állományt.
+
+Az pálya jeleiről
+A pálya UTF-8 szövegállományban íratik,
+s minden jel külön rendeltetésű.
+
+Jel	Jelentés
+╬	Keresztút, minden irány nyitva
+═	Vízszintes folyosó
+║	Függőleges folyosó
+╦ ╩ ╣ ╠	Elágazások
+╗ ╝ ╚ ╔	Sarkok
+█	Terem, melyet meg kell látogatni
+.	Üres hely, semmi
+P	Játékos jelölése mentett állásban
+Példa pálya
+text
+.║═══╗.
+.║...║.
+.╠═╦═╣.
+.║.█.║.
+.╚═╩═╝.
+Példa mentés
+text
+P╬
+R3:4
+T18
+Nyelv és beszéd
+Minden felirat lang.json állományból olvastatik,
+hogy a játék több nyelven szólhasson az emberhez.
+Ha új nyelvet kívánsz adni, a JSON állományba új nyelvi ág teendő.
+
+json
+{
+  "hu": {
+    "Title": "Labirintus",
+    "LoadMap": "Pálya betöltése"
+  },
+  "en": {
+    "Title": "Labyrinth",
+    "LoadMap": "Load Map"
+  }
+}
+Technikai dolgok
+Tulajdonság	Érték
+Nyelv	C#
+Keretrendszer	.NET / WPF
+Felület	XAML, Canvas, Viewbox
+Térkép	UTF-8 szövegállomány
+Lokalizáció	lang.json
+Mozgás	Billentyűzet, KeyDown
+Időzítő	DispatcherTimer
+Mentés	Szöveges állomány P, R, T sorokkal
+Fájlok rendje
+text
+Labirynth/
+├── Labirynth.sln
+├── Labirynth/
+│   ├── MainWindow.xaml
+│   ├── MainWindow.xaml.cs
+│   ├── lang.json
+│   └── maps/
+│       ├── map1.txt
+│       └── map2.txt
+Hogyan indítandó
+Másold le a repositoryt.
+
+Nyisd meg a megoldást Visual Studio-ban.
+
+Fordítsd és indítsd el a programot.
+
+Tölts be egy pályát.
+
+Járjad, míg győzelemre nem jutsz.
+
+Szükséges dolgok
+Windows operációs rendszer
+
+Visual Studio 2022 vagy újabb
+
+.NET 6.0 vagy újabb
+
+Befejezés
+Íme vala ez a kis mű,
+mely játék és próbatétel egyszerre,
+s melyben az ember az idővel viaskodik,
+az útvesztőben pedig önmagával találkozik.
+
+**Látjátok feleim, mik vogymuk:
+kicsiny játék, de nagy próba.**
